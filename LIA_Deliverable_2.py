@@ -1,15 +1,16 @@
-# collaborators
-# Mia Doan (2483330) & Kaira Sotelo (6293070)
+# Collaborators: Mia Doan (2483330) & Kaira Sotelo (6293070)
+# Description: dataset to plot graph of the area burned in the last 10 years by forest fires  
 
 # import 
 import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt 
+
+# Read dataset 
+dataset = pd.read_csv("Area_burned_dataset.csv")
 
 # variables
-year, jurisdiction, area_in_hectares = np.loadtxt("Area_burned_dataset.csv", skiprows = 1, usecols = (0,3,7), unpack = True )
+year = df['Year']
+jurisdiction = df["Jurisdiction"]
 
-# loops 
-for i in year: 
-    if year  < 2010 or year  > 2021: 
-        
-    
     
