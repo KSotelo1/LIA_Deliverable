@@ -20,8 +20,9 @@ plt.show()
 
 #comments: This scatter plot shows a lot of variations of fires throughout the years
 
-#historgram
+#historgram + grid
 plt.hist(df["area"])
+plt.grid(True)
 plt.title("Area Burned")
 plt.xlabel("area")
 plt.show()
@@ -35,12 +36,17 @@ plt.xlabel("year")
 plt.ylabel("Area Burned (hectares)")
 plt.show()
 
-#comments: This bar plot describes the areas categories of the fires to distinguish if they are big or small (in hectares). 
+#comments: This bar plot shows the variation in areas burned per year, however it is irrelevant in our case since we cannot find other variables to make a better bar plot
 
 #pie chart
-labels = df["jurisdiction"]
-plt.pie()
+labels = [ "Alberta", "Quebec", "Saskatchewan", "Manitoba", "British-Columbia", "New-Brunswick", "Nova Scotia", "Prince Edward Island", " Northwest territories", "Newfoundland & labrador", "Ontario", "Yukon"]
+size = [29365, 17338, 12457, 10618, 35406, 10963, 9002, 561, 6963, 4027, 27867, 3373]
+colors = ["red", "orange", "yellow", "green", "blue", "pink", "purple", "brown", "cyan", "magenta", "white", "black" ]
+plt.pie(sizes, labels = labels, colors = colors, startangle=140)
 plt.title("Pie Chart of Areas burned by Jurisdiction")
 plt.axis("equal")
 plt.show()
 
+#comment: This pie chart shows the numbers of fires per jurisdiction
+
+#2 subplots 
