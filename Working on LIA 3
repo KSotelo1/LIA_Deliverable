@@ -125,4 +125,16 @@ for col in numeric_cols:
     plt.show()
         
     #f)  Kernel density estimation (choosing the smoothing bandwidth)
-    sns.kdeplot(df[col], )
+    sns.kdeplot(df[col], fill=True, color="green")
+    plt.title("KDE plot of {col}") 
+    plt.xlabel(col)
+    plt.ylabel("density")
+    plt.show()
+    
+    #g)  Empirical cumulative distributions
+    sns.ecdfplot(df[col], color="pink")
+    plt.title("Empirical cumulative distributions of {col}") 
+    plt.xlabel(col)
+    plt.ylabel("cumulative probability")
+    plt.show()
+    
