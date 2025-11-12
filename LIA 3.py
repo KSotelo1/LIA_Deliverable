@@ -10,7 +10,9 @@ import numpy as np
 # DATASET
 data = pd.read_csv("Forest_Fires_Dataset.csv", encoding="cp1252")
 
+
 #########################################################################
+
 
 # Q2 - PRELIMINARY STEPS
 # a) Initial Data Inspection: 
@@ -63,7 +65,9 @@ data["Year"] = pd.to_datetime(data["Year"])
 
 # pd.to_numeric isn't necessary since the numerical value, such as "Number", are already identified as numbers
 
+
 ###############################################################################
+
 
 # Q3 - UNIVARIATE NON-GRAPHICAL EDA 
 # For the "Number" column, since it's the onl categorical variable
@@ -120,6 +124,7 @@ for col in data.select_dtypes(exclude=[np.number]):
     
     
 ################################################################################
+
 
 # Q4 - UNIVARIATE GRAPHICAL EDA 
 
@@ -184,22 +189,46 @@ plt.show()
 # Since we only have 2 categorical variables, we can only use the crosstab function to verify the intersection between 2 varibles once
 
 # Intersection between "Cause" and "Jurisdiction" 
-cause_per_jurisdiction = pd.crosstab( data["Cause"], data["Jurisdcition"], normalize=True)
-print(cause_per_jurisdiction)
+#cause_per_jurisdiction = pd.crosstab( data["Cause"], data["Jurisdiction"], normalize=True)
+#print(cause_per_jurisdiction)
 
 # Intersection between more than 2 variables
-three_way_frequency_table = pd.crosstab( data["Cause"], data["Jurisdiction"], data["Year"], data["Data Qualifier"])
-print(three_way_frequency_table)
-    
+#three_way_frequency_table = pd.crosstab( data["Cause"], data["Jurisdiction"], data["Year"], data["Data Qualifier"])
+#print(three_way_frequency_table)
+   
+
+####################################################################################
+
 
 # Q6 - MULTIVARIATE GRAPHICAL EDA 
 
 # 6.1: statistical relationships 
+
 # a) Faceting 
+sns.relplot( data = data, x = data['Number'], y = data["Cause"], col = "Jurisdiction")
+plt.title(" Relationship between Number of fires and Cause, based on Jurisdiction")
+plt.show()
+
 # b) x,y,hue,size,col
+sns.relplot( data = data, x = data['Number'], y = data["Cause"], hue = "Jurisdiction", col = "Cause")
+plt.title(" Relationship between Number of fires and Cause, based on Jurisdiction")
+plt.show()
+
 # c) line 
+sns.relplot( data = data, x = data["Number"], y = data["Jurisdiction"], hue = "Cause", kind = "line")
+plt.title(" Line relationship between Number of fires and Cause, based on Jurisdiction")
+plt.show()
+# it makes sense to make the number of fires a linear plot, since we can better visualize the variation between them
+
 # d) standard deviation 
+#sns.relplot( data = data, x = data['Number'], y = data["Cause"], col = "Jurisdiction", errorbar = "sd",)
+#plt.title(" Relationship between Number of fires and Cause, based on Jurisdiction, with standard deviation")
+#plt.show()
+
 # e) linear regression 
+#sns.lmplot( data = data, x = data['Number'], y = data["Cause"], hue = "Jurisdiction", col = "Jurisdiction")
+#plt.title(" Linear relationship between Number of fires and Cause, based on Jurisdiction")
+#plt.show()
 
 # 6.2: Categorical data 
 # a) Scatter plot, with jitter
@@ -215,5 +244,8 @@ print(three_way_frequency_table)
 
 # 6.3: Bivariate distributions 
 # a) Heatmap plot, with 2 variables
+sns.displot( data, x = "Number", y = "Year")
 # b) Dstribution plot
+sns.displot( data, x = "Number", y = "Year", kind = "kde")
 # c) Heatmap plot, with 3 varibles
+sns.displot( data, x = "Number", y = 'Year', hue = "Jurisdiction")
