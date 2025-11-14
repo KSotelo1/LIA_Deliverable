@@ -139,7 +139,6 @@ plt.title("Histogram of Number of Fires for 20 bins")
 plt.xlabel("Number of Fires")
 plt.ylabel("Count")
 plt.show()
-####!!!!!!!!!!!!
     
 # b) Conditioning on other variables 
 # using "Jurisdiction"
@@ -185,17 +184,17 @@ plt.xlabel("Number of fires")
 plt.ylabel("Cumulative probability")
 plt.show()
     
+
 # Q5 - MULTIVARIATE NON-GRAPHICAL EDA
-# Since we only have 2 categorical variables, we can only use the crosstab function to verify the intersection between 2 varibles once
+# Since we only have 3 categorical variables ( Year, Cause and Jurisdiction ), we can only use the crosstab function to verify the intersection variables twice
 
 # Intersection between "Cause" and "Jurisdiction" 
+cause_per_jurisdiction = pd.crosstab( data["Cause"], data["Jurisdiction"], normalize=True)
+print(cause_per_jurisdiction)
 
-#cause_per_jurisdiction = pd.crosstab( data["Cause"], data["Jurisdiction"], normalize=True)
-#print(cause_per_jurisdiction)
-
-# Intersection between more than 2 variables
-#cause_per_jurisdiction = pd.crosstab( data["Cause"], data["Jurisdiction"], normalize=True)
-#print(cause_per_jurisdiction)
+# Intersection between "Year" and "Cause" 
+cause_per_year = pd.crosstab( data["Cause"], data["Year"], normalize=True)
+print(cause_per_year)
 
 # Intersection between more than 2 variables
 three_way_frequency_table = pd.crosstab( index = [data["Cause"], data["Jurisdiction"]], columns =  data["Year"])
