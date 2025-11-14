@@ -189,12 +189,19 @@ plt.show()
 # Since we only have 2 categorical variables, we can only use the crosstab function to verify the intersection between 2 varibles once
 
 # Intersection between "Cause" and "Jurisdiction" 
+
 #cause_per_jurisdiction = pd.crosstab( data["Cause"], data["Jurisdiction"], normalize=True)
 #print(cause_per_jurisdiction)
 
 # Intersection between more than 2 variables
-#three_way_frequency_table = pd.crosstab( data["Cause"], data["Jurisdiction"], data["Year"], data["Data Qualifier"])
-#print(three_way_frequency_table)
+#cause_per_jurisdiction = pd.crosstab( data["Cause"], data["Jurisdiction"], normalize=True)
+#print(cause_per_jurisdiction)
+
+# Intersection between more than 2 variables
+three_way_frequency_table = pd.crosstab( index = [data["Cause"], data["Jurisdiction"]], columns =  data["Year"])
+print(three_way_frequency_table)
+
+
    
 
 ####################################################################################
@@ -221,31 +228,98 @@ plt.show()
 # it makes sense to make the number of fires a linear plot, since we can better visualize the variation between them
 
 # d) standard deviation 
-#sns.relplot( data = data, x = data['Number'], y = data["Cause"], col = "Jurisdiction", errorbar = "sd",)
-#plt.title(" Relationship between Number of fires and Cause, based on Jurisdiction, with standard deviation")
-#plt.show()
+sns.relplot( data = data, x = data['Number'], y = data["Cause"], col = "Jurisdiction", kind="line", errorbar = "sd",)
+plt.title(" Relationship between Number of fires and Cause, based on Jurisdiction, with standard deviation")
+plt.show()
 
 # e) linear regression 
-#sns.lmplot( data = data, x = data['Number'], y = data["Cause"], hue = "Jurisdiction", col = "Jurisdiction")
-#plt.title(" Linear relationship between Number of fires and Cause, based on Jurisdiction")
-#plt.show()
+#In order to have only numeric values, we have to convert "Year" column into a number before plotting it
+data["Year"] = pd.to_datetime(data["Year"], errors="coerce").dt.year
+data["Year"] = pd.to_numeric(data["Year"], errors="coerce")
+
+sns.lmplot( data = data, x ='Year', y = "Number", hue = "Jurisdiction", col = "Jurisdiction")
+plt.title(" Linear relationship between Number of fires and Cause, based on Jurisdiction")
+plt.show()
 
 # 6.2: Categorical data 
 # a) Scatter plot, with jitter
+#Use of sns.stripplot because we only have categorical scatter plot 
+sns.stripplot(data=data, x="Cause", y="Number", jitter=True, hue="Jurisdiction")
+plt.title("Categorical Scatter Plot (Jitter enabled)")
+plt.show()
+
 # b) Scatter plot, without jitter
-# c) Beeswarm plot
+sns.stripplot(data=data, x="Cause", y="Number", jitter=False, hue="Jurisdiction")
+plt.title("Categorical Scatter Plot (Jitter disabled)")
+plt.show()
+
+# c) Beeswarm plot representing 3 variables
+sns.swarmplot(data=data, x="Cause", y="Number", hue="Jurisdiction")
+plt.title("Beeswarm Plot: Number of Fires by Cause and Jurisdiction")
+plt.show()
+
 # d) Box plot, with 3 variables 
-# e) Boxenplot
+sns.boxplot(data=data, x="Cause", y="Number", hue="Jurisdiction")
+plt.title("Box Plot Showing Distribution Shape of Number of Fires by Cause")
+plt.show()
+
+# e) Boxenplot showing the shape of the distribution
+sns.boxenplot(data=data, x="Cause", y="Number", hue="Jurisdiction")
+plt.title("Box Plot Showing Distribution Shape of Number of Fires by Cause")
+plt.show()
+
 # f) split violin plot 
+sns.violinplot(data=data, x="Cause", y="Number", hue="Jurisdiction", split=True, bw_adjust=0.6)
+#Choice of bandwith 0.6 to add more detail, especially since there is distribution overlap
+plt.title("Split Violin Plot (with bw_adjust=0.6) Showing Number of Fires by Cause")
+plt.show()
+
 # g) violin plot, with scatter points
+sns.violinplot(data=data, x="Cause", y="Number", inner=None, color="pink")
+sns.stripplot(data=data, x="Cause", y="Number", color="blue", size=3)
+plt.title("Violin PLot with Scatter Points Inside")
+plt.show()
+#The inner=None removes the default inner lines or dots from the violin plot to have a shape that is clearer and size=3 makes the overlaped scatter points small to offer a clearer observations
+
 # h) bar plot, 97% CI
+sns.barplot(data=data, x="Cause", y="Number", hue="Jurisdiction", ci=97)
+plt.title("Bar Plot (with 97% Confidence Interval): Number of Fires by Cause and Jurisdiction")
+plt.show()
+
 # i) bar plot, 90% CI 
+sns.pointplot(data=data, x="Cause", y="Number", hue="Jurisdiction", ci=90, linestyles="--")
+plt.title("Point plot (with 90% Confidence Interval and Dashed Lines): Number of Fires by Cause and Jurisdiction")
+plt.show()
+
 # j) bar plot, with number of observations
+sns.countplot(data=data, x="Cause", hue="Jurisdiction")
+plt.title("Count of Observations of Number of Fires per Cause and Jurisdiction")
+plt.show()
 
 # 6.3: Bivariate distributions 
 # a) Heatmap plot, with 2 variables
-sns.displot( data, x = "Number", y = "Year")
-# b) Dstribution plot
-sns.displot( data, x = "Number", y = "Year", kind = "kde")
-# c) Heatmap plot, with 3 varibles
-sns.displot( data, x = "Number", y = 'Year', hue = "Jurisdiction")
+sns.displot(data=data, x= "Number", y= "Year", bins=(20,20), cmap="coolwarm", cbar=True)
+plt.title("Heatmap of Number of Fires vs Year with Color Intensity bar and Adjusted Bin Width")
+plt.show()
+
+# b) Distribution plot with bivariate density contours (KDE)
+#Making sure all data is numeric and drop the missing values
+data["Year"] = pd.to_numeric(data["Year"], errors="coerce")
+data["Number"] = pd.to_numeric(data["Number"], errors="coerce")
+data = data.dropna(subset=["Year","Number"])
+
+sns.displot( data, x = "Number", y = "Year", kind = "kde", fill=True, levels=15, thresh=0.5, cmap="rocket", cbar=True) 
+plt.title("Bivariate KDE plot: Number of Fires vs Year with Contour Levels") 
+plt.show() 
+
+# c) Heatmap plot, with 3 varibles 
+sns.displot( data, x = "Number", y = 'Year', hue = "Jurisdiction", kind="kde", fill=True, levels=10, thresh=0.1, cmap="crest") 
+plt.title("Heatmap Plot: Number of Fires vs Year by Jurisdiction")
+plt.show()
+#The fill=True will fill the contours of the distribution plot, the levels=# is the number of contour lines and the thresh=# if the lowest contour level that filters low-density areas
+
+
+
+
+
+
