@@ -45,7 +45,7 @@ print("Memory usage of each column")
 print(data.memory_usage())
 
 
-# b) Handle duplicate entries
+# b) duplicate entries
 
 # duplicates
 print()
