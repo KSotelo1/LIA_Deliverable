@@ -155,26 +155,37 @@ plt.show()
 
 # b) Conditioning on other variables 
 # using "Jurisdiction"
-sns.histplot( data=data, x="Number", hue="Jurisdiction", bins=15)
+plt.figure(figsize=(10, 5))
+ax = sns.histplot( data=data, x="Number", hue="Jurisdiction", bins=15)
 plt.title("Number of Fires by Jurisdiction")
 plt.xlabel("Number of fires")
 plt.ylabel("count")
-plt.show()
+plt.xticks(rotation=45, ha="right")
+sns.move_legend(ax, "upper left", bbox_to_anchor=(1, 1))
+plt.tight_layout()
 
 
 # c) Stacked histogram
-sns.histplot( data=data,  x="Number", hue="Jurisdiction", multiple = "stack", bins=15)
+plt.figure(figsize=(10, 5))
+ax = sns.histplot( data=data,  x="Number", hue="Jurisdiction", multiple = "stack", bins=15)
 plt.title("stacked histograms of Number of Fires by Jurisdiction")
 plt.xlabel("Number of fires")
 plt.ylabel("Count")
+plt.xticks(rotation=45, ha="right")
+sns.move_legend(ax, "upper left", bbox_to_anchor=(1, 1))
+plt.tight_layout()
 plt.show()
 
 
 # d) Dodge bars 
-sns.histplot( data=data, x="Number", hue="Jurisdiction", multiple="dodge", bins=15)
+plt.figure(figsize=(10, 5))
+ax = sns.histplot( data=data, x="Number", hue="Jurisdiction", multiple="dodge", bins=15)
 plt.title("Dodge histogram of Number of Fires by Jurisdiction")
 plt.xlabel("Number of fires")
 plt.ylabel("Count")
+plt.xticks(rotation=45, ha="right")
+sns.move_legend(ax, "upper left", bbox_to_anchor=(1, 1))
+plt.tight_layout()
 plt.show()
 
 
@@ -265,37 +276,62 @@ plt.show()
  
 # a) Scatter plot, with jitter
 #Use of sns.stripplot because we only have categorical scatter plot 
-sns.stripplot(data=data, x="Cause", y="Number", jitter=True, hue="Jurisdiction")
+plt.figure(figsize=(10, 5))
+ax = sns.stripplot(data=data, x="Cause", y="Number", jitter=True, hue="Jurisdiction")
 plt.title("Categorical Scatter Plot (Jitter enabled)")
+plt.xticks(rotation=45, ha="right")
+sns.move_legend(ax, "upper left", bbox_to_anchor=(1, 1))
+plt.tight_layout()
 plt.show()
 
 # b) Scatter plot, without jitter
-sns.stripplot(data=data, x="Cause", y="Number", jitter=False, hue="Jurisdiction")
+plt.figure(figsize=(10, 5))
+ax = sns.stripplot(data=data, x="Cause", y="Number", jitter=False, hue="Jurisdiction")
 plt.title("Categorical Scatter Plot (Jitter disabled)")
+plt.xticks(rotation=45, ha="right")
+sns.move_legend(ax, "upper left", bbox_to_anchor=(1, 1))
+plt.tight_layout()
 plt.show()
 
 # c) Beeswarm plot representing 3 variables
-sns.swarmplot(data=data, x="Cause", y="Number", hue="Jurisdiction")
+plt.figure(figsize=(10, 5))
+ax = sns.swarmplot(data=data, x="Cause", y="Number", hue="Jurisdiction")
 plt.title("Beeswarm Plot: Number of Fires by Cause and Jurisdiction")
+plt.xticks(rotation=45, ha="right")
+sns.move_legend(ax, "upper left", bbox_to_anchor=(1, 1))
+plt.tight_layout()
 plt.show()
 
 # d) Box plot, with 3 variables 
-sns.boxplot(data=data, x="Cause", y="Number", hue="Jurisdiction")
+plt.figure(figsize=(10, 5))
+ax = sns.boxplot(data=data, x="Cause", y="Number", hue="Jurisdiction")
 plt.title("Box Plot Showing Distribution Shape of Number of Fires by Cause")
+plt.xticks(rotation=45, ha="right")
+sns.move_legend(ax, "upper left", bbox_to_anchor=(1, 1))
+plt.tight_layout()
 plt.show()
 
 # e) Boxenplot showing the shape of the distribution
-sns.boxenplot(data=data, x="Cause", y="Number", hue="Jurisdiction")
+plt.figure(figsize=(10, 5))
+ax = sns.boxenplot(data=data, x="Cause", y="Number", hue="Jurisdiction")
 plt.title("Box Plot Showing Distribution Shape of Number of Fires by Cause")
+plt.xticks(rotation=45, ha="right")
+sns.move_legend(ax, "upper left", bbox_to_anchor=(1, 1))
+plt.tight_layout()
 plt.show()
 
-# f) split violin plot 
-sns.violinplot(data=data, x="Cause", y="Number", hue="Jurisdiction", split=True, bw_adjust=0.6)
+# f) split violin plot
+plt.figure(figsize=(10,5))
+ax = sns.violinplot(data=data, x="Cause", y="Number", hue="Jurisdiction", split=True, bw_adjust=0.6)
 # Choice of bandwith 0.6 to add more detail, especially since there is distribution overlap
 plt.title("Split Violin Plot (with bw_adjust=0.6) Showing Number of Fires by Cause")
+plt.xticks(rotation=45, ha="right")
+sns.move_legend(ax, "upper left", bbox_to_anchor=(1, 1))
+plt.tight_layout()
 plt.show()
 
 # g) violin plot, with scatter points
+plt.figure(figsize=(10, 5))
 sns.violinplot(data=data, x="Cause", y="Number", inner=None, color="pink")
 sns.stripplot(data=data, x="Cause", y="Number", color="blue", size=3)
 plt.title("Violin PLot with Scatter Points Inside")
@@ -303,18 +339,30 @@ plt.show()
 # The inner = None removes the default inner lines or dots from the violin plot to have a shape that is clearer and size=3 makes the overlaped scatter points small to offer a clearer observations
 
 # h) bar plot, 97% CI
-sns.barplot(data=data, x="Cause", y="Number", hue="Jurisdiction", ci=97)
+plt.figure(figsize=(10, 5))
+ax = sns.barplot(data=data, x="Cause", y="Number", hue="Jurisdiction", ci=97)
 plt.title("Bar Plot (with 97% Confidence Interval): Number of Fires by Cause and Jurisdiction")
+plt.xticks(rotation=45, ha="right")
+sns.move_legend(ax, "upper left", bbox_to_anchor=(1, 1))
+plt.tight_layout()
 plt.show()
 
 # i) bar plot, 90% CI 
-sns.pointplot(data=data, x="Cause", y="Number", hue="Jurisdiction", ci=90, linestyles="--")
+plt.figure(figsize=(10, 5))
+ax = sns.pointplot(data=data, x="Cause", y="Number", hue="Jurisdiction", ci=90, linestyles="--")
 plt.title("Point plot (with 90% Confidence Interval and Dashed Lines): Number of Fires by Cause and Jurisdiction")
+plt.xticks(rotation=45, ha="right")
+sns.move_legend(ax, "upper left", bbox_to_anchor=(1, 1))
+plt.tight_layout()
 plt.show()
 
 # j) bar plot, with number of observations
-sns.countplot(data=data, x="Cause", hue="Jurisdiction")
+plt.figure(figsize=(10, 5))
+ax = sns.countplot(data=data, x="Cause", hue="Jurisdiction")
 plt.title("Count of Observations of Number of Fires per Cause and Jurisdiction")
+plt.xticks(rotation=45, ha="right")
+sns.move_legend(ax, "upper left", bbox_to_anchor=(1, 1))
+plt.tight_layout()
 plt.show()
 
 
